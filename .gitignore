@@ -1,0 +1,12 @@
+
+scripts/mgvm/*
+scripts/mgvm-nobalance/*
+scripts/private/*
+scripts/shared/*
+
+
+mgpusim/samples/*/*
+!mgpusim/samples/*/*.go
+
+
+
