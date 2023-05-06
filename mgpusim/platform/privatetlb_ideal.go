@@ -20,11 +20,11 @@ func MakePrivateTLBIdealPlatformBuilder() PrivateTLBIdealPlatformBuilder {
 			log2PageSize:             uint64(12),
 			numCUPerShaderArray:      uint64(4),
 			numShaderArrayPerChiplet: uint64(8),
-			numMemoryBankPerChiplet:  uint64(8),
+			numMemoryBankPerChiplet:  uint64(16),
 			numChiplets:              uint64(4),
-			totalMem:                 8 * mem.GB,
+			totalMem:                 16 * mem.GB,
 			bankSize:                 256 * mem.MB,
-			lowAddr:                  2 * mem.GB,
+			lowAddr:                  4 * mem.GB,
 		}}
 	return b
 }
@@ -64,6 +64,8 @@ func (b *PrivateTLBIdealPlatformBuilder) createGPUBuilder(
 	gpuBuilder.WithLog2PageSize(b.log2PageSize)
 	gpuBuilder.WithPageTable(gpuDriver.PageTable)
 	gpuBuilder.WithAlg(b.alg)
+	gpuBuilder.WithSchedulingPartition(b.partition)
+	gpuBuilder.WithWalkersPerChiplet(b.walkersPerChiplet)
 
 	b.setVisTracer(gpuDriver, gpuBuilder)
 	b.setTLBTracer(gpuBuilder)

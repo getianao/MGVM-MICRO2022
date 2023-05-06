@@ -34,7 +34,7 @@ func (b PrivateTLBIdealGPUBuilder) Build(name string, id uint64) *mgpusim.GPU {
 	b.buildCP()
 
 	chipRdmaAddressTable := b.createChipRDMAAddrTable()
-	rdmaResponsePorts := make([]akita.Port, 4)
+	rdmaResponsePorts := make([]akita.Port, b.numChiplet)
 	// remoteAddressTranslationTable := b.createRemoteAddrTransTable()
 	// rtuResponsePorts := make([]akita.Port, 4)
 
@@ -68,6 +68,39 @@ func (b PrivateTLBIdealGPUBuilder) Build(name string, id uint64) *mgpusim.GPU {
 	b.setupInterchipNetwork()
 
 	return b.gpu
+}
+
+func (b *PrivateTLBIdealGPUBuilder) connectCP() {
+	b.internalConn = akita.NewDirectConnection(
+		b.gpuName+"InternalConn", b.engine, b.freq)
+	b.gpu.InternalConnection = b.internalConn
+
+	b.internalConn.PlugIn(b.cp.ToDriver, 1)
+	b.internalConn.PlugIn(b.cp.ToDMA, 128)
+	b.internalConn.PlugIn(b.cp.ToCaches, 128)
+	b.internalConn.PlugIn(b.cp.ToCUs, 128)
+	b.internalConn.PlugIn(b.cp.ToTLBs, 128)
+	b.internalConn.PlugIn(b.cp.ToAddressTranslators, 128)
+	b.internalConn.PlugIn(b.cp.ToRDMA, 4)
+	b.internalConn.PlugIn(b.cp.ToPMC, 4)
+
+	b.internalConn.PlugIn(b.cp.ToRTU, 4)
+	b.internalConn.PlugIn(b.cp.ToMMUs, 4)
+
+	b.cp.RDMA = b.rdmaEngine.CtrlPort
+	b.internalConn.PlugIn(b.cp.RDMA, 1)
+
+	b.cp.DMAEngine = b.dmaEngine.ToCP
+	b.internalConn.PlugIn(b.dmaEngine.ToCP, 1)
+
+	b.cp.PMC = b.pageMigrationController.CtrlPort
+	b.internalConn.PlugIn(b.pageMigrationController.CtrlPort, 1)
+
+	b.connectCPWithCUs()
+	b.connectCPWithAddressTranslators()
+	b.connectCPWithCaches()
+	b.connectCPWithMMUs()
+	b.connectCPWithTLBs()
 }
 
 func (b *PrivateTLBIdealGPUBuilder) connectL1TLBToL2TLB(chiplet *Chiplet) {

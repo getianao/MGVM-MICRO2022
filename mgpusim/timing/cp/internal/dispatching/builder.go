@@ -1,6 +1,8 @@
 package dispatching
 
 import (
+	"fmt"
+
 	"gitlab.com/akita/akita"
 	"gitlab.com/akita/mgpusim/kernels"
 	"gitlab.com/akita/mgpusim/protocol"

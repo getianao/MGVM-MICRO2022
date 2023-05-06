@@ -1033,7 +1033,10 @@ func (r *Runner) buildTimingPlatform() {
 			b.WithoutProgressBar()
 		}
 		b.WithAlg(*schedulingAlg)
+		b.WithSchedulingPartition(*schedulingPartition)
 		b.WithMemAllocatorType(*memAllocatorType)
+		b.WithLog2PageSize(*log2PageSize)
+		b.WithWalkersPerChiplet(*numWalkers)
 		r.Engine, r.GPUDriver = b.Build()
 	case "xortlb":
 		b := platform.MakeXORTLBGPUPlatformBuilder()

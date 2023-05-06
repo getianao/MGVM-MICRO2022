@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-configs = ['private', 'shared', 'mgvm', 'mgvm-nobalance']
+configs = ['private', 'private-ideal' , 'shared', 'mgvm', 'mgvm-nobalance']
 
 benchmarks = [
         'convolution2d',
@@ -36,6 +36,10 @@ for config in configs:
 
         if config == 'private':
             submit_file.write("-platform-type privatetlb ")
+            submit_file.write("-mem-allocator-type lasp ")
+            submit_file.write("-use-lasp-mem-alloc ")
+        elif config == 'private-ideal':
+            submit_file.write("-platform-type privatetlb_ideal ")
             submit_file.write("-mem-allocator-type lasp ")
             submit_file.write("-use-lasp-mem-alloc ")
         elif config == 'shared':
