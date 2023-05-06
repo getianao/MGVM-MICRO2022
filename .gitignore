@@ -4,9 +4,16 @@ scripts/mgvm-nobalance/*
 scripts/private/*
 scripts/shared/*
 
+scripts2/mgvm/*
+scripts2/mgvm-nobalance/*
+scripts2/private/*
+scripts2/shared/*
+scripts2/bin/*
+
 
 mgpusim/samples/*/*
 !mgpusim/samples/*/*.go
 
 
 
+scripts2/helper_functions/__pycache__/*
