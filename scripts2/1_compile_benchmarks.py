@@ -38,7 +38,7 @@ class Test(object):
 
 
 def main():
-
+    subprocess.Popen('mkdir bin', shell=True, cwd="../scripts2")
     adi = Test(benchmarks_path + 'adi')
     aes = Test(benchmarks_path + 'aes')
     atax = Test(benchmarks_path + 'atax')
