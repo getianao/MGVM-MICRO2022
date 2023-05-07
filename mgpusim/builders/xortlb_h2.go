@@ -118,51 +118,6 @@ func (b *XORTLBH2GPUBuilder) connectMMUToL2(chiplet *Chiplet) {
 	l1ToL2Conn.PlugIn(chiplet.MMU.TranslationPort, 64)
 }
 
-func (b *XORTLBH2GPUBuilder) setupInterchipNetwork() {
-	chipConnector := chipnetwork.NewInterChipletConnector().
-		WithEngine(b.engine).
-		WithSwitchLatency(360).
-		WithFreq(1 * akita.GHz).
-		WithFlitByteSize(64).
-		WithNumReqPerCycle(12).
-		WithNetworkName("ICN")
-	chipConnector.CreateNetwork()
-	for _, chiplet := range b.chiplets {
-		chipConnector.PlugInChip(b.InterChipletPorts(chiplet))
-	}
-	chipConnector.MakeNetwork()
-}
-
-func (b *XORTLBH2GPUBuilder) InterChipletPorts(c *Chiplet) []akita.Port {
-	ports := []akita.Port{
-		c.chipRdmaEngine.RequestPort,
-		c.chipRdmaEngine.ResponsePort,
-		c.remoteTranslationUnit.GetRequestPort(),
-		c.remoteTranslationUnit.GetResponsePort(),
-	}
-	return ports
-}
-
-func (b *XORTLBH2GPUBuilder) InterChipletMagicPorts(c *Chiplet) []akita.Port {
-	ports := []akita.Port{
-		c.pageRdmaEngine.RequestPort,
-		c.pageRdmaEngine.ResponsePort,
-	}
-	return ports
-}
-
-func (b *XORTLBH2GPUBuilder) setupInterchipMagicNetwork() {
-	interchipDirectConnection := akita.NewDirectConnection("magic",
-		b.engine, 1*akita.GHz)
-	for _, chiplet := range b.chiplets {
-		for _, port := range b.InterChipletMagicPorts(chiplet) {
-			interchipDirectConnection.PlugIn(port, 64)
-		}
-	}
-	b.interChipletMagicNetwork = interchipDirectConnection
-	b.gpu.InterChipletMagicNetwork = interchipDirectConnection
-}
-
 func (b *XORTLBH2GPUBuilder) createRemoteAddrTransTable() *cache.XORLowModuleFinder {
 
 	log2RemoteTLBInterleaving := int(math.Log2(float64(b.remoteTLBInterleavingSize)))
@@ -241,4 +196,48 @@ func (b *XORTLBH2GPUBuilder) connectL1TLBToL2TLB(chiplet *Chiplet) {
 		l1sTLB.SetLowModuleFinder(lowModuleFinder)
 		tlbConn.PlugIn(l1sTLB.BottomPort, 16)
 	}
+}
+func (b *XORTLBH2GPUBuilder) setupInterchipNetwork() {
+	chipConnector := chipnetwork.NewInterChipletConnector().
+		WithEngine(b.engine).
+		WithSwitchLatency(360).
+		WithFreq(1 * akita.GHz).
+		WithFlitByteSize(64).
+		WithNumReqPerCycle(12).
+		WithNetworkName("ICN")
+	chipConnector.CreateNetwork()
+	for _, chiplet := range b.chiplets {
+		chipConnector.PlugInChip(b.InterChipletPorts(chiplet))
+	}
+	chipConnector.MakeNetwork()
+}
+
+func (b *XORTLBH2GPUBuilder) setupInterchipMagicNetwork() {
+	interchipDirectConnection := akita.NewDirectConnection("magic",
+		b.engine, 1*akita.GHz)
+	for _, chiplet := range b.chiplets {
+		for _, port := range b.InterChipletMagicPorts(chiplet) {
+			interchipDirectConnection.PlugIn(port, 64)
+		}
+	}
+	b.interChipletMagicNetwork = interchipDirectConnection
+	b.gpu.InterChipletMagicNetwork = interchipDirectConnection
+}
+
+func (b *XORTLBH2GPUBuilder) InterChipletPorts(c *Chiplet) []akita.Port {
+	ports := []akita.Port{
+		c.chipRdmaEngine.RequestPort,
+		c.chipRdmaEngine.ResponsePort,
+		c.remoteTranslationUnit.GetRequestPort(),
+		c.remoteTranslationUnit.GetResponsePort(),
+	}
+	return ports
+}
+
+func (b *XORTLBH2GPUBuilder) InterChipletMagicPorts(c *Chiplet) []akita.Port {
+	ports := []akita.Port{
+		c.pageRdmaEngine.RequestPort,
+		c.pageRdmaEngine.ResponsePort,
+	}
+	return ports
 }

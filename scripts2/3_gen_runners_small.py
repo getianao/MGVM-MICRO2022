@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-configs = ['private', 'private-ideal' , 'shared', 'mgvm', 'mgvm-nobalance']
+configs = ['private', 'private-ideal' , 'shared', 'shared-h1', 'mgvm', 'mgvm-nobalance']
 
 benchmarks = [
         'convolution2d',

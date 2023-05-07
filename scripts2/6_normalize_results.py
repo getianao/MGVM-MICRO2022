@@ -40,9 +40,10 @@ for row in csvreader:
     rows.append(row)
 
 
-inputFolders = ["private", "private-ideal", "shared",  
-                        # "mgvm-nobalance", 
-                        "mgvm"]
+inputFolders = ["private", "private-ideal",
+                "shared",   "shared-h1",
+                # "mgvm-nobalance",
+                "mgvm"]
 normalised_rows = ["benchmark"]
 
 metrics = ["IPC" , "PW Latency", "L2 TLB Local Hits", "L2 TLB Remote Hits", "PW Acccess Local Hits", "PW Acccess Remote Hits"]

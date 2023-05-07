@@ -4,11 +4,9 @@ scripts/mgvm-nobalance/*
 scripts/private/*
 scripts/shared/*
 
-scripts2/mgvm/*
-scripts2/mgvm-nobalance/*
-scripts2/private/*
-scripts2/shared/*
-scripts2/private-ideal/*
+scripts2/mgvm*/*
+scripts2/private*/*
+scripts2/shared*/*
 scripts2/bin/*
 
 
