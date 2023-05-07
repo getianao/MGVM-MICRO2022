@@ -9,12 +9,13 @@ echo "use \`kill -9 -$pgid\` to kill all child processes"
 
 for config in ${configs[@]}; 
 do
+  mkdir -p ./$config/log
   for benchmark in ${benchmarks[@]}; 
   do
     echo $config $benchmark
     cd $config
-    pwd
-    bash ${benchmark}.sh > output &
+    # pwd
+    bash ${benchmark}.sh > log/${benchmark}.log &
     cd ..
   done
 done

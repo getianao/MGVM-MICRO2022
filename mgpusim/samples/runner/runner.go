@@ -2444,6 +2444,7 @@ func (r *Runner) AddBenchmarkWithoutSettingGPUsToUse(b benchmarks.Benchmark) {
 
 // Run runs the benchmark on the simulator
 func (r *Runner) Run() {
+	fmt.Fprintf(os.Stdout, "Program ["+strings.Join(os.Args, " ")+"] start.\n")
 	r.GPUDriver.Run()
 
 	var wg sync.WaitGroup
@@ -2470,7 +2471,8 @@ func (r *Runner) Run() {
 	r.Engine.Finished()
 
 	//r.reportStats()
-	fmt.Println("Program", os.Args, "finished.")
+	fmt.Fprintf(os.Stderr, "Program ["+strings.Join(os.Args, " ")+"] finished.\n")
+	fmt.Fprintf(os.Stdout, "Program ["+strings.Join(os.Args, " ")+"] finished.\n")
 	atexit.Exit(0)
 }
 
