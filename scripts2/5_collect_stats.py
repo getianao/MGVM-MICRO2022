@@ -53,7 +53,9 @@ configs = list()
 
 def collectStats(inputFolders):
     if not inputFolders:
-        inputFolders = ["private", "shared",  "mgvm-nobalance", "mgvm"]
+        inputFolders = ["private", "private-ideal", "shared",  
+                        # "mgvm-nobalance", 
+                        "mgvm"]
     for f in inputFolders:
         inputFilePath = extractPaths(f)
         print(inputFilePath)

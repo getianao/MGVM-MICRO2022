@@ -39,14 +39,27 @@ rows = []
 for row in csvreader:
     rows.append(row)
 
-normalised_rows = ["benchmark",
-        "", "IPC Private", "IPC Shared", "IPC MGVM-NoBalance", "IPC MGVM",
-        "", "PW Latency Private", "PW Latency Shared", "PW Latency MGVM-NoBalance", "PW Latency MGVM",
-        "", "L2 TLB Local Hits Private", "L2 TLB Local Hits Shared", "L2 TLB Local Hits MGVM-NoBalance", "L2 TLB Local Hits MGVM",
-        "", "L2 TLB Remote Hits Private", "L2 TLB Remote Hits Shared", "L2 TLB Remote Hits MGVM-NoBalance", "L2 TLB Remote Hits MGVM",
-        "", "PW Acccess Local Hits Private", "PW Acccess Local Hits Shared", "PW Acccess Local Hits MGVM-NoBalance", "PW Acccess Local Hits MGVM",
-        "", "PW Acccess Remote Hits Private", "PW Acccess Remote Hits Shared", "PW Acccess Remote Hits MGVM-NoBalance", "PW Acccess Remote Hits MGVM",
-        ]
+
+inputFolders = ["private", "private-ideal", "shared",  
+                        # "mgvm-nobalance", 
+                        "mgvm"]
+normalised_rows = ["benchmark"]
+
+metrics = ["IPC" , "PW Latency", "L2 TLB Local Hits", "L2 TLB Remote Hits", "PW Acccess Local Hits", "PW Acccess Remote Hits"]
+
+for i in range(len(metrics)):
+    normalised_rows.append("")
+    for j in range(len(inputFolders)):
+        normalised_rows.append(metrics[i] + " " + inputFolders[j])
+    
+# normalised_rows = ["benchmark",
+#         "", "IPC Private", "IPC Shared", "IPC MGVM-NoBalance", "IPC MGVM",
+#         "", "PW Latency Private", "PW Latency Shared", "PW Latency MGVM-NoBalance", "PW Latency MGVM",
+#         "", "L2 TLB Local Hits Private", "L2 TLB Local Hits Shared", "L2 TLB Local Hits MGVM-NoBalance", "L2 TLB Local Hits MGVM",
+#         "", "L2 TLB Remote Hits Private", "L2 TLB Remote Hits Shared", "L2 TLB Remote Hits MGVM-NoBalance", "L2 TLB Remote Hits MGVM",
+#         "", "PW Acccess Local Hits Private", "PW Acccess Local Hits Shared", "PW Acccess Local Hits MGVM-NoBalance", "PW Acccess Local Hits MGVM",
+#         "", "PW Acccess Remote Hits Private", "PW Acccess Remote Hits Shared", "PW Acccess Remote Hits MGVM-NoBalance", "PW Acccess Remote Hits MGVM",
+#         ]
 csvwriter.writerow(normalised_rows)
 
 for row in rows:
@@ -113,12 +126,18 @@ for row in rows:
     mgvm_remote_pw_num = float(row[metric_to_row_map['pw_remote_num'] + 4])
     # nrow.append("")
     nrow.append(private_local_pw_num/(private_local_pw_num+private_remote_pw_num))
-    nrow.append(shared_local_pw_num/(shared_local_pw_num+shared_remote_pw_num))
+    if((shared_local_pw_num+shared_remote_pw_num)==0):
+        nrow.append(float('nan'))
+    else:
+        nrow.append(shared_local_pw_num/(shared_local_pw_num+shared_remote_pw_num))
     nrow.append(mgvm_nobalance_local_pw_num/(mgvm_nobalance_local_pw_num+mgvm_nobalance_remote_pw_num))
     nrow.append(mgvm_local_pw_num/(mgvm_local_pw_num+mgvm_remote_pw_num))
     nrow.append("")
     nrow.append(private_remote_pw_num/(private_local_pw_num+private_remote_pw_num))
-    nrow.append(shared_remote_pw_num/(shared_local_pw_num+shared_remote_pw_num))
+    if((shared_local_pw_num+shared_remote_pw_num)==0):
+        nrow.append(float('nan'))
+    else:
+        nrow.append(shared_remote_pw_num/(shared_local_pw_num+shared_remote_pw_num))
     nrow.append(mgvm_nobalance_remote_pw_num/(mgvm_nobalance_local_pw_num+mgvm_nobalance_remote_pw_num))
     nrow.append(mgvm_remote_pw_num/(mgvm_local_pw_num+mgvm_remote_pw_num))
     csvwriter.writerow(nrow)
