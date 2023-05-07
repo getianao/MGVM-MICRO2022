@@ -20,7 +20,7 @@ do
   done
 done
 
-
+wait
 
         
 

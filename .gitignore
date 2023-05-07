@@ -18,3 +18,5 @@ mgpusim/samples/*/*
 
 
 scripts2/helper_functions/__pycache__/*
+scripts2/error.*
+scripts2/output.*

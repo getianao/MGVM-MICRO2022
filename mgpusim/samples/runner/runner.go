@@ -7,6 +7,7 @@ import (
 	"log"
 	"net"
 	"net/http"
+	"os"
 
 	// Enable profiling
 	_ "net/http/pprof"
@@ -2469,7 +2470,7 @@ func (r *Runner) Run() {
 	r.Engine.Finished()
 
 	//r.reportStats()
-
+	fmt.Println("Program", os.Args, "finished.")
 	atexit.Exit(0)
 }
 

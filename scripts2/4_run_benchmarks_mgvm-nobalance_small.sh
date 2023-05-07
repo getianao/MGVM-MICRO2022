@@ -20,4 +20,4 @@ do
   done
 done
         
-
+wait

@@ -21,3 +21,4 @@ do
 done
         
 
+wait

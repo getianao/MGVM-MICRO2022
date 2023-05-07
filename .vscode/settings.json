@@ -1,0 +1,5 @@
+{
+  "go.alternateTools": {
+    "go":  "/hpc/users/CONNECT/tge601/spack/opt/spack/linux-rhel8-skylake_avx512/gcc-7.5.0/go-1.18-vi43ktqyb4xx2w24jhpyj6nfyhhnk5mt/bin/go"
+  }
+}

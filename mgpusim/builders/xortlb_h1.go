@@ -36,9 +36,9 @@ func (b XORTLBH1GPUBuilder) Build(name string, id uint64) *mgpusim.GPU {
 	b.buildCP()
 
 	chipRdmaAddressTable := b.createChipRDMAAddrTable()
-	rdmaResponsePorts := make([]akita.Port, 4)
+	rdmaResponsePorts := make([]akita.Port, b.numChiplet)
 	remoteAddressTranslationTable := b.createRemoteAddrTransTable()
-	rtuResponsePorts := make([]akita.Port, 4)
+	rtuResponsePorts := make([]akita.Port, b.numChiplet)
 
 	for i := 0; i < b.numChiplet; i++ {
 		chipletName := fmt.Sprintf("%s.chiplet_%02d", b.gpuName, i)
