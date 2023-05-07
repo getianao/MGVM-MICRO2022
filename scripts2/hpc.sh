@@ -17,10 +17,13 @@ cur_dir=$(cd `dirname ${fullpath}`; pwd)
 echo ${cur_dir}
 
 
-./4_run_benchmarks_shared.sh &
+
 ./4_run_benchmarks_private.sh &
+./4_run_benchmarks_private-ideal.sh &
+./4_run_benchmarks_shared.sh &
+./4_run_benchmarks_shared-h1.sh &
 # ./4_run_benchmarks_mgvm-nobalance.sh &
 ./4_run_benchmarks_mgvm.sh &
-./4_run_benchmarks_private-ideal.sh &
+
 
 wait
