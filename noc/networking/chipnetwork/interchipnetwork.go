@@ -84,6 +84,7 @@ func (c *InterChipletConnector) CreateNetwork() {
 		WithRoutingTable(routing.NewTable()).
 		WithNumReqPerCycle(c.numReqPerCycle).
 		WithNumChiplets(4).
+		WithSwitchLatency(c.switchLatency).
 		WithMaxOutgoingReqsPerChiplet(12).
 		Build(fmt.Sprintf("%s.Switch%d", c.networkName, 0))
 	c.switchConnector = switching.NewChipSwitchConnector(c.engine)

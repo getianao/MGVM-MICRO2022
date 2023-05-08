@@ -2,7 +2,7 @@
 
 #BSUB -q lmem
 
-#BSUB -n 50
+#BSUB -n 56
 
 #BSUB -e error.%J
 

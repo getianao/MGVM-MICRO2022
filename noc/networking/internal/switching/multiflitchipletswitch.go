@@ -388,6 +388,7 @@ type MultiFlitChipletSwitchBuilder struct {
 	routingTable   routing.Table
 	arbiter        arbitration.Arbiter
 	numReqPerCycle int
+	switchLatency  int
 	// numChiplets               int
 	// maxOutgoingReqsPerChiplet int
 }
@@ -395,6 +396,11 @@ type MultiFlitChipletSwitchBuilder struct {
 // WithEngine sets the engine that the MultiFlitChipletSwitch to build uses.
 func (b MultiFlitChipletSwitchBuilder) WithEngine(engine akita.Engine) MultiFlitChipletSwitchBuilder {
 	b.engine = engine
+	return b
+}
+
+func (b MultiFlitChipletSwitchBuilder) WithSwitchLatency(switchLatency int) MultiFlitChipletSwitchBuilder {
+	b.switchLatency = switchLatency
 	return b
 }
 
@@ -453,7 +459,8 @@ func (b MultiFlitChipletSwitchBuilder) Build(name string) *MultiFlitChipletSwitc
 	s.flitByteSize = 64
 	s.encodingOverhead = 0
 
-	s.switchLatency = 360 //720 //180 //360 // changed this here
+	// s.switchLatency = 360 //720 //180 //360 // changed this here
+	s.switchLatency = b.switchLatency
 	fmt.Println("switch latency:", s.switchLatency)
 	s.bufferSizeInNumFlit = 64
 	return s
