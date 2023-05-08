@@ -54,7 +54,9 @@ configs = list()
 def collectStats(inputFolders):
     if not inputFolders:
         inputFolders = ["private", "private-ideal",
-                        "shared", "shared-h1",
+                        "shared", 
+                        # "shared-h1",
+                        "xortlb-ideal1"
                         # "mgvm-nobalance",
                         "mgvm"]
     for f in inputFolders:

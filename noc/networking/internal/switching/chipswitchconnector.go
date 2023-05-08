@@ -71,6 +71,7 @@ func (c *ChipSwitchConnector) createPortComplex(
 	sendOutBuf := util.NewBuffer(2 * c.numReqPerCycle)
 	forwardBuf := util.NewBuffer(2 * c.numReqPerCycle)
 	routeBuf := util.NewBuffer(2 * c.numReqPerCycle)
+	
 	pipeline := pipelining.NewPipeline(
 		local.Name()+"pipeline", c.switchLatency, 1, routeBuf)
 

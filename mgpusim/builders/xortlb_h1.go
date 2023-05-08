@@ -43,7 +43,6 @@ func (b XORTLBH1GPUBuilder) Build(name string, id uint64) *mgpusim.GPU {
 	for i := 0; i < b.numChiplet; i++ {
 		chipletName := fmt.Sprintf("%s.chiplet_%02d", b.gpuName, i)
 		chiplet := NewChiplet(chipletName, uint64(i))
-
 		b.BuildSAs(chiplet)
 		b.buildMemBanks(chiplet)
 		b.buildMMU(chiplet)

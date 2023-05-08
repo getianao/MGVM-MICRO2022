@@ -952,7 +952,7 @@ func (b *CommonBuilder) setupInterchipNetwork() {
 	for _, chiplet := range b.chiplets {
 		chipConnector.PlugInChip(b.InterChipletPorts(chiplet))
 	}
-	chipConnector.MakeNetwork()
+	// chipConnector.MakeNetwork()
 	// b.interChipletNetwork = chipConnector
 	// b.gpu.InterChipletNetwork = chipConnector
 }
