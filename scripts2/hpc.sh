@@ -17,7 +17,7 @@ cur_dir=$(cd `dirname ${fullpath}`; pwd)
 echo ${cur_dir}
 
 
-
+# bsub -q lmem -n 16 -e error.%J -o output.%J -W 48:00 -J mgpusim -M
 ./4_run_benchmarks_private.sh &
 ./4_run_benchmarks_private-ideal.sh &
 ./4_run_benchmarks_shared.sh &
@@ -25,6 +25,7 @@ echo ${cur_dir}
 # ./4_run_benchmarks_mgvm-nobalance.sh &
 ./4_run_benchmarks_xortlb-ideal1.sh &
 ./4_run_benchmarks_mgvm.sh &
+./4_run_benchmarks_mgvm-ideal1.sh &
 
 
 wait
