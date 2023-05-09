@@ -1,7 +1,7 @@
 benchmarks = [
     'convolution2d',
     'fastwalshtransform',
-    # 'gups',
+    'gups',
     'jacobi1d',
     'jacobi2d',
     'kmeans',

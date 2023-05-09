@@ -67,16 +67,29 @@ for row in rows:
     nrow = []
     nrow.append(row[0])
     nrow.append("")
-    private_time = float(row[metric_to_row_map['kernel_time'] + 1])
-    shared_time = float(row[metric_to_row_map['kernel_time'] + 2])
-    mgvm_nobalance_time  = float(row[metric_to_row_map['kernel_time'] + 3])
-    mgvm_time = float(row[metric_to_row_map['kernel_time'] + 4])
-    ## IPC is reciprocal of time
-    nrow.append(private_time/private_time)
-    nrow.append(private_time/shared_time)
-    nrow.append(private_time/mgvm_nobalance_time)
-    nrow.append(private_time/mgvm_time)
+    
+    # IPC
+    metric_name = 'kernel_time'
+    data_group = []
+    for ii in range(len(inputFolders)):
+        # print(row[metric_to_row_map[metric_name]+ ii + 1])
+        data_group.append(float(row[metric_to_row_map[metric_name]+ ii + 1]))
+    for ii in range(len(inputFolders)):
+        # print(data_group[0]/data_group[ii])
+        nrow.append(data_group[0]/data_group[ii])
     nrow.append("")
+
+    # PW Latency
+    # metric_name = 'mmu-pw-lat'
+    # data_group = []
+    # for ii in range(len(inputFolders)):
+    #     # print(row[metric_to_row_map[metric_name]+ ii + 1])
+    #     data_group.append(float(row[metric_to_row_map[metric_name]+ ii + 1]))
+    # for ii in range(len(inputFolders)):
+    #     # print(data_group[0]/data_group[ii])
+    #     nrow.append(data_group[ii]/data_group[0])
+    # nrow.append("")
+    
     private_pwlat = float(row[metric_to_row_map['mmu-pw-lat'] + 1])
     shared_pwlat = float(row[metric_to_row_map['mmu-pw-lat'] + 2])
     mgvm_nobalance_pwlat  = float(row[metric_to_row_map['mmu-pw-lat'] + 3])
