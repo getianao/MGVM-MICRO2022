@@ -1394,6 +1394,44 @@ func (r *Runner) buildTimingPlatform() {
 		b = b.SwitchL2TLBStriping(*useSwitching)
 		b = b.UsePtCaching(*ptCaching)
 		r.Engine, r.GPUDriver = b.Build()
+	case "customtlb_ideal1":
+		b := platform.MakeCustomTLBIdeal1GPUPlatformBuilder()
+		if r.Parallel {
+			b.WithParallelEngine()
+		}
+
+		if *isaDebug {
+			b.WithISADebugging()
+		}
+
+		if *visTracing {
+			b.WithVisTracing()
+		}
+
+		if *memTracing {
+			b.WithMemTracing()
+		}
+
+		if *tlbTracing {
+			b.WithTLBTracing()
+		}
+
+		if *disableProgressBar {
+			b.WithoutProgressBar()
+		}
+		b.WithAlg(*schedulingAlg)
+		b.WithSchedulingPartition(*schedulingPartition)
+		b.WithMemAllocatorType(*memAllocatorType)
+		b.WithCustomHSL(*customHSL)
+		b.WithWalkersPerChiplet(*numWalkers)
+		b.UseCoalescingTLBPort(*useCoalescingTLBPort)
+		b.UseCoalescingRTU(*useCoalescingRTU)
+		b.WithLog2PageSize(*log2PageSize)
+		b = b.WithL2TLBStriping(*l2TlbStriping)
+		b = b.SwitchL2TLBStriping(*useSwitching)
+		b = b.UsePtCaching(*ptCaching)
+		r.Engine, r.GPUDriver = b.Build()
+	
 	default:
 		panic("oh no!")
 	}

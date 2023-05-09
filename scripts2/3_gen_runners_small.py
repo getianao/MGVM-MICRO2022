@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-configs = ['private', 'private-ideal' , 'shared', 'shared-h1', 'mgvm', 'mgvm-nobalance']
+configs = ['private', 'private-ideal' , 'shared', 'shared-h1', 'mgvm','mgvm-ideal1', 'mgvm-nobalance']
 
 benchmarks = [
         'convolution2d',
@@ -51,6 +51,10 @@ for config in configs:
             submit_file.write("-platform-type customtlb ")
             submit_file.write("-use-lasp-hsl-mem-alloc ")
             submit_file.write("-switch-tlb-striping ")
+        elif config == 'mgvm-ideal1':
+            submit_file.write("-platform-type customtlb_ideal1 ")
+            submit_file.write("-use-lasp-hsl-mem-alloc ")
+            submit_file.write("-switch-tlb-striping ")
         elif config == 'mgvm-nobalance':
             submit_file.write("-platform-type customtlb ")
             submit_file.write("-use-lasp-hsl-mem-alloc ")
@@ -87,7 +91,7 @@ for config in configs:
             submit_file.write("-sched-partition Xdiv ")
 
         # set appropriate HSL values
-        if config == 'mgvm' or config == 'mgvm-nobalance':
+        if config == 'mgvm' or config == 'mgvm-nobalance' or config == 'mgvm-ideal1':
             if benchmark == 'convolution2d':
                 submit_file.write("-custom-hsl 16384 ")
                 submit_file.write("-mem-allocator-type hslaware-32 ")

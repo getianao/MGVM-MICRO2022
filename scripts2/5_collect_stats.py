@@ -58,7 +58,7 @@ def collectStats(inputFolders):
                         # "shared-h1",
                         "xortlb-ideal1",
                         # "mgvm-nobalance",
-                        "mgvm"]
+                        "mgvm", "mgvm-ideal1"]
     for f in inputFolders:
         inputFilePath = extractPaths(f)
         print(inputFilePath)

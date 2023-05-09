@@ -43,7 +43,8 @@ for row in csvreader:
 inputFolders = ["private", "private-ideal",
                 "shared",   "shared-h1",
                 # "mgvm-nobalance",
-                "mgvm"]
+                "mgvm", "mgvm-ideal1"]
+
 normalised_rows = ["benchmark"]
 
 metrics = ["IPC" , "PW Latency", "L2 TLB Local Hits", "L2 TLB Remote Hits", "PW Acccess Local Hits", "PW Acccess Remote Hits"]
